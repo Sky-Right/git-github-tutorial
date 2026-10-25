@@ -51,7 +51,7 @@ def prepare(raw, out):
     draw = ImageDraw.Draw(canvas)
     font = ImageFont.truetype(str(ROOT / 'theme/fonts/DroidSerif-400.ttf'), 27)
     draw.text((0, 0), 'Incoming', font=font, fill='#1a1a1a')
-    draw.text((830, 0), 'Current → Accept Current', font=font, fill='#1a1a1a')
+    draw.text((830, 0), 'Current: Accept Current', font=font, fill='#1a1a1a')
     canvas.paste(before.crop((735, 223, 2375, 410)), (0, 36))
     draw.text((0, 243), 'Result — after choosing Current', font=font, fill='#1a1a1a')
     canvas.paste(im.crop((735, 710, 2375, 905)), (0, 271))
