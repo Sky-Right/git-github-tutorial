@@ -1,0 +1,191 @@
+{
+  "version": "1.137.0",
+  "commit": "645f29cc3176500b4b5762ba887cf2a7f0ffdf2c",
+  "captured": "2026-10-25",
+  "platform": "macOS",
+  "theme": "Dark Modern",
+  "locale": "zh-cn",
+  "extensions": "Built-in Git only; empty temporary profile",
+  "editing": "Crops and thin blue outlines only; no UI text or colors replaced",
+  "images": [
+    {
+      "file": "init.png",
+      "source": "init.png",
+      "sourceSHA256": "4d0221b630caa64b63664690ba4a627ad4c82084128f75a290e30095ca160251",
+      "crop": [
+        500,
+        105,
+        1120,
+        215
+      ],
+      "highlights": [],
+      "operation": "Git: Initialize Repository; default branch main"
+    },
+    {
+      "file": "changes.png",
+      "source": "diff.png",
+      "sourceSHA256": "a5ddc5726027008cae5deaaa1ca4823e54e962483315a479fbdea2c81bbaeeff",
+      "crop": [
+        125,
+        400,
+        705,
+        520
+      ],
+      "highlights": [],
+      "operation": "Changes lists the unstaged index.html edit; opening this list is read-only"
+    },
+    {
+      "file": "diff.png",
+      "source": "diff.png",
+      "sourceSHA256": "a5ddc5726027008cae5deaaa1ca4823e54e962483315a479fbdea2c81bbaeeff",
+      "crop": [
+        735,
+        160,
+        1650,
+        355
+      ],
+      "highlights": [],
+      "operation": "Click index.html in Changes; inline diff compares working file with index"
+    },
+    {
+      "file": "stage.png",
+      "source": "diff.png",
+      "sourceSHA256": "a5ddc5726027008cae5deaaa1ca4823e54e962483315a479fbdea2c81bbaeeff",
+      "crop": [
+        125,
+        400,
+        705,
+        520
+      ],
+      "highlights": [
+        [
+          603,
+          454,
+          639,
+          498
+        ]
+      ],
+      "operation": "Stage Changes (+) copies v2 into the index; HEAD remains A"
+    },
+    {
+      "file": "unstage.png",
+      "source": "staged.png",
+      "sourceSHA256": "7f09a303312d17c632b1a8faf733ae1d2c8d7d3a525f36308f482005b9be2ab6",
+      "crop": [
+        125,
+        400,
+        705,
+        520
+      ],
+      "highlights": [
+        [
+          603,
+          454,
+          639,
+          498
+        ]
+      ],
+      "operation": "Unstage Changes (-) restores the index from A; working v2 is kept"
+    },
+    {
+      "file": "commit.png",
+      "source": "commit.png",
+      "sourceSHA256": "39f124e22d7ba1feef5fd1c1ec98698a62cb400a07452417c5a9acf49e7e55eb",
+      "crop": [
+        160,
+        225,
+        700,
+        390
+      ],
+      "highlights": [
+        [
+          170,
+          238,
+          689,
+          305
+        ],
+        [
+          170,
+          322,
+          689,
+          386
+        ]
+      ],
+      "operation": "Enter Add homepage, then Commit; staged v2 becomes B locally"
+    },
+    {
+      "file": "history.png",
+      "source": "history.png",
+      "sourceSHA256": "10aa8e59ae7d7175b844aae428c7d6e25a64debc16b45ed812353a6f6ec38d9a",
+      "crop": [
+        125,
+        827,
+        705,
+        1010
+      ],
+      "highlights": [],
+      "operation": "Built-in Source Control Graph displays B then A; inspection does not check out a commit"
+    },
+    {
+      "file": "switch.png",
+      "source": "switch.png",
+      "sourceSHA256": "a27f5588bc6221bd5042b5dc5611102bdeaa31e3bff481f0cdc487f756b9c1f1",
+      "crop": [
+        500,
+        105,
+        1250,
+        215
+      ],
+      "highlights": [],
+      "operation": "Status Bar branch selector: choose existing add-style; HEAD changes, both tips stay at B"
+    },
+    {
+      "file": "merge.png",
+      "source": "merge.png",
+      "sourceSHA256": "a13fecb71efda36a43372ef7ce0c89e32421826c93e0b2caf3f8e2316ead662b",
+      "crop": [
+        500,
+        105,
+        1300,
+        215
+      ],
+      "highlights": [],
+      "operation": "Git: Merge... on main, select add-style; fast-forward from B to C"
+    },
+    {
+      "file": "publish.png",
+      "source": "publish.png",
+      "sourceSHA256": "c247a1d274cd98896e6375b70f5befc684122f65aaa02c6ffb4f60945d36bed1",
+      "crop": [
+        160,
+        315,
+        700,
+        390
+      ],
+      "highlights": [],
+      "operation": "Publish Branch with origin configured pushes main and sets origin/main as upstream"
+    },
+    {
+      "file": "conflict.png",
+      "source": "conflict-result.png",
+      "sourceSHA256": "bac660bea79d1742080254a81d9d648658ef6cf7109d790be925c584716389a0",
+      "inputSource": "conflict.png",
+      "inputSourceSHA256": "e610224b3963990c54b34fc7f9e64a93a5dc421899cab29424e4d29e0c274b02",
+      "crops": [
+        [
+          735,
+          223,
+          2375,
+          410
+        ],
+        [
+          735,
+          710,
+          2375,
+          905
+        ]
+      ],
+      "operation": "Actual Merge Editor inputs before choosing Current, then Result afterward: Our homepage. Complete Merge saves/resolves the file; the merge still needs a commit."
+    }
+  ]
+}

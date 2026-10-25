@@ -16,6 +16,7 @@
 !/engine/qa_git.cjs
 !/engine/test_standalone.py
 !/engine/verify_git_examples.py
+!/engine/prepare_vscode_captures.py
 !/theme/
 /theme/*
 !/theme/git.html
@@ -25,6 +26,7 @@
 !/images/
 /images/*
 !/images/git-course/
+!/images/vscode/
 !/examples/
 !/LICENSES/
 !/docs/

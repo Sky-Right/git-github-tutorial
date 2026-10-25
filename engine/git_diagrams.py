@@ -165,6 +165,7 @@ def build():
     v2 = ['index.html: v2', 'My homepage']
     area_scene('edit', (v1, v1, 'A', 'README.md and style.css are unchanged.'), (v2, v1, 'A', 'Only the working copy of index.html changed.'), 'Editing index.html changes only the working directory')
     area_scene('stage', (v2, v1, 'A', 'The homepage edit is not staged yet.'), (v2, v2, 'A', 'The new homepage is staged. No new commit yet.'), 'git add index.html stages its current contents')
+    area_scene('unstage', (v2, v2, 'A', 'The homepage edit is staged.'), (v2, v1, 'A', 'The edit is kept in the working file; the index matches A.'), 'Unstaging restores the index from A without discarding the working edit')
     area_scene('commit', (v2, v2, 'A', 'The staged snapshot is ready.'), (v2, v2, 'B', 'B: Add homepage. README.md and style.css are still included.'), 'git commit records the homepage snapshot as B')
     b = ''
     for x, title, version in [(0, 'Working directory', 'v3'), (370, 'Staging area', 'v2'), (740, 'Next commit', 'v2')]:

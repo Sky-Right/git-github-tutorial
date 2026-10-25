@@ -77,6 +77,13 @@ def verify():
         run(local, 'add')
         assert git(local, 'show', ':index.html') == '<h1>My homepage</h1>'
         assert git(local, 'rev-parse', 'HEAD') == a
+        run(local, 'unstage', part=slice(0, 1))
+        assert git(local, 'show', ':index.html') == '<h1>Hello</h1>'
+        assert (local / 'index.html').read_text() == '<h1>My homepage</h1>\n'
+        assert git(local, 'rev-parse', 'HEAD') == a
+        run(local, 'unstage', part=slice(1, None))
+        assert git(local, 'show', ':index.html') == '<h1>My homepage</h1>'
+        checks.append('unstage restores index from A, preserves working v2 and HEAD, then add restores staged v2')
         run(local, 'commit')
         b = git(local, 'rev-parse', 'HEAD')
         assert len(git(local, 'ls-tree', '--name-only', 'HEAD').splitlines()) == 3
@@ -182,13 +189,13 @@ def verify():
         git(demo, 'restore', 'index.html')
         assert (demo / 'index.html').read_text() == 'v2\n'
         checks.append('the staging quiz saves v2; unstage preserves v3; restore copies the staged v2')
-        git(demo, 'switch', '-c', 'add-footer')
-        save(demo, 'index.html', '<h1>Our homepage</h1>\n', 'Other heading')
+        git(demo, 'switch', '-c', 'conflict-incoming')
+        save(demo, 'index.html', '<h1>Your homepage</h1>\n', 'Incoming heading')
         git(demo, 'switch', 'main')
-        save(demo, 'index.html', '<h1>My homepage</h1>\n', 'My heading')
-        assert git(demo, 'merge', 'add-footer', ok=False).returncode != 0
+        save(demo, 'index.html', '<h1>Our homepage</h1>\n', 'Current heading')
+        assert git(demo, 'merge', 'conflict-incoming', ok=False).returncode != 0
         conflict = (demo / 'index.html').read_text()
-        assert '<<<<<<< HEAD' in conflict and '=======' in conflict and '>>>>>>> add-footer' in conflict
+        assert '<<<<<<< HEAD' in conflict and '=======' in conflict and '>>>>>>> conflict-incoming' in conflict
         git(demo, 'merge', '--abort')
         assert git(demo, 'status', '--porcelain') == ''
         checks.append('the alternative conflict example produces the displayed markers and can be aborted')

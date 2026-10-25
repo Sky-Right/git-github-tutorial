@@ -4,7 +4,7 @@ An English workshop for people new to version control, by Tianyou Yu.
 
 [Open the course](https://sky-right.github.io/git-github-tutorial/)
 
-The 42 slides follow `my-first-project`, with a README, an HTML file, and a stylesheet. Commands sit beside diagrams of the files, commits, branches, and remote references before and after each operation. Speaker notes include the teaching details and official references.
+The 45 slides follow `my-first-project`, with a README, an HTML file, and a stylesheet. Commands sit beside diagrams of the files, commits, branches, and remote references before and after each operation. Real VS Code excerpts connect the commands with staging, committing, history, branch selection, merging, and conflict resolution. Speaker notes include the teaching details and official references.
 
 ## Run locally
 
@@ -26,6 +26,7 @@ Use the arrow keys to navigate, **P** for speaker notes, and **?** for help. Pri
 - `theme/git-course.css`: the original workshop typography and layout, with small course-specific adjustments.
 - `engine/git_diagrams.py`: SVG drawing source. The build regenerates `images/git-course/`.
 - `examples/my-first-project/`: the starter files used throughout the lesson.
+- `images/vscode/`: real, cropped VS Code screenshots and capture provenance.
 - `theme/git.html`: Remark configuration and HTML template.
 
 Run `./build-git.sh` after editing. Change the source files rather than the generated HTML or SVG files.
@@ -50,6 +51,8 @@ python3 engine/verify_git_examples.py
 ```
 
 The second command extracts the lesson's Git commands and runs them against temporary local repositories. It checks file contents, staging, HEAD, branch tips, merge parents, and remote operations without writing to GitHub.
+
+The VS Code examples use built-in Git tools. [Capture notes](images/vscode/README.md) identify the version, localized interface, tested actions, and differences between similar operations such as Push and Sync. The teaching repository and its local bare remotes are excluded from publication.
 
 For browser screenshots, install Playwright separately and provide Chrome or Chromium:
 

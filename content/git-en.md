@@ -92,8 +92,12 @@ Use your own name and email. Git attaches them to your commits.
 
 .note[GitHub provides a no-reply email address if you prefer to keep your email private.]
 
+VS Code’s built-in Git tools use the same repository as the terminal.
+
+.note[Screenshots: VS Code 1.137, Dark Modern, Chinese UI. The action names here are in English.]
+
 ???
-Install Git first. The examples use Git 2.28 or newer for init -b; switch and restore require 2.23 or newer. --global sets the default identity for this user, not a GitHub login. Use the no-reply address in GitHub Settings > Emails if needed. Sources: https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup and https://docs.github.com/en/account-and-profile/how-tos/email-preferences/setting-your-commit-email-address
+Install Git first. In VS Code, use View > Source Control. F1 opens the Command Palette; on macOS use Shift+Command+P, and on Windows/Linux use Ctrl+Shift+P. No Git extension is required for the operations shown.  The examples use Git 2.28 or newer for init -b; switch and restore require 2.23 or newer. --global sets the default identity for this user, not a GitHub login. Use the no-reply address in GitHub Settings > Emails if needed. Sources: https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup and https://docs.github.com/en/account-and-profile/how-tos/email-preferences/setting-your-commit-email-address
 
 ---
 class: compare compact-code
@@ -147,6 +151,10 @@ git init -b main
 Git adds `.git` to this folder.
 
 The three project files stay as they are. There are no commits yet.
+
+.gui-path[VS Code · Command Palette → **Git: Initialize Repository**]
+
+.gui-shot[![Real VS Code Command Palette result for Git: Initialize Repository](../images/vscode/init.png)]
 ]
 .right[
 ![Before and after init: the same three project files, plus a new .git directory](../images/git-course/init.svg)
@@ -154,6 +162,8 @@ The three project files stay as they are. There are no commits yet.
 .clear[]
 
 ???
+The GUI command asks which folder to initialize. Select my-first-project. The screenshot is a real local command result, not a drawn interface. The demo profile sets git.defaultBranchName to main; other installations may choose another initial name. Do not initialize the parent folder. Source: https://code.visualstudio.com/docs/sourcecontrol/quickstart
+
 main is a branch name, not a special keyword. With no commits, HEAD names an unborn main branch. No remote is configured and nothing is uploaded. Source: https://git-scm.com/docs/git-init
 
 ---
@@ -182,6 +192,8 @@ git add .
 Here, `.` includes the three files in our project folder.
 
 Now their contents are staged, but there is no commit yet.
+
+.gui-path[VS Code · Hover over **Changes** → **+** to stage all three files.]
 ]
 .right[
 ![Before add the stage is empty; afterward README.md, index.html and style.css are staged, with no commit](../images/git-course/initial-stage.svg)
@@ -206,6 +218,8 @@ git commit -m \
 Commit **A** contains all three files.
 
 It is saved locally.
+
+.gui-path[VS Code · Enter **Add project files**, then **Commit**.]
 ]
 .right[
 ![Before commit the three files are staged; afterward commit A saves all three files](../images/git-course/initial-commit.svg)
@@ -277,6 +291,42 @@ Both commands only read the state.
 The diff omits file headers and context. The first status column compares the index with HEAD; the second compares the working tree with the index. A new untracked file would appear as ?? and would not appear in plain git diff. Sources: https://git-scm.com/docs/git-status and https://git-scm.com/docs/git-diff
 
 ---
+class: compare compact-code gui-read
+name: inspect-vscode
+
+# Inspect it in VS Code
+
+.left[
+```bash
+git status --short
+```
+
+.gui-shot[![Real Source Control Changes group: index.html is modified and unstaged](../images/vscode/changes.png)]
+
+**Source Control → Changes**
+
+`M` marks the modified file.
+Opening the panel does not change Git.
+]
+.right[
+```bash
+git diff
+```
+
+.gui-shot[![Real inline Diff Editor: Hello removed and My homepage added](../images/vscode/diff.png)]
+
+**Click `index.html` in Changes.**
+
+The diff compares the working file with the stage.
+]
+.clear[]
+
+.note[View → Source Control. Use the Command Palette for commands that start with “Git:”.]
+
+???
+The screenshot excerpts are from the same saved homepage edit, before staging. In Source Control, Changes shows unstaged edits; Staged Changes shows edits prepared for the next commit. Selecting a file opens a diff but does not stage or commit it. The screenshot uses the built-in inline diff view to keep both changed lines readable. A file can appear in both lists after staging and then editing again. Source: https://code.visualstudio.com/docs/sourcecontrol/staging-commits
+
+---
 class: command
 name: add
 
@@ -290,7 +340,10 @@ git diff --staged
 
 The homepage edit is now staged.
 
-`git diff --staged` shows what the next commit will change.
+.gui-path[VS Code · Hover over `index.html` in **Changes** → **+ Stage Changes**.]
+
+.gui-shot[![Real index.html row, with the Stage Changes plus button outlined](../images/vscode/stage.png)]
+
 ]
 .right[
 ![index.html v2 is copied from the working directory into staging; commit A remains unchanged](../images/git-course/stage.svg)
@@ -298,7 +351,37 @@ The homepage edit is now staged.
 .clear[]
 
 ???
+In the screenshot, the blue outline marks the real plus icon. Clicking it was verified to change the index from Hello to My homepage without changing HEAD. To inspect the same staged diff in VS Code, select index.html under Staged Changes. Source: https://code.visualstudio.com/docs/sourcecontrol/staging-commits
+
 The query command does not change the diagram. Only git add changes the index. The staged snapshot still includes the unchanged README.md and style.css from A. Source: https://git-scm.com/docs/git-add
+
+---
+class: command compact-code
+name: unstage
+
+# Unstage the change
+
+.left[
+```bash
+git restore --staged index.html
+```
+
+.gui-path[VS Code · In **Staged Changes**, click **− Unstage Changes**.]
+
+.gui-shot[![Real Staged Changes row, with the Unstage Changes minus button outlined](../images/vscode/unstage.png)]
+
+Then stage it again:
+```bash
+git add index.html
+```
+]
+.right[
+![Before unstaging, v2 is staged; after unstaging the index matches A and working v2 remains](../images/git-course/unstage.svg)
+]
+.clear[]
+
+???
+This is a short detour in the same example: unstage, observe, then stage again before the quiz and commit B. The diagram shows only the unstage operation. The final git add returns to the previous staged state. Unstage Changes is different from Discard Changes (the curved arrow), which can lose working edits. The real minus action was checked against Git: the index matched A, the working file still contained v2, and HEAD did not move. The built-in UI may run git reset internally; the state effect here is the same as restore --staged. Source: https://code.visualstudio.com/docs/sourcecontrol/staging-commits
 
 ---
 class: quiz
@@ -331,9 +414,11 @@ name: commit
 git commit -m "Add homepage"
 ```
 
-Commit **B** saves the new homepage.
+.gui-path[VS Code · Enter **Add homepage**, then click **Commit**.]
 
-It also includes the unchanged README and CSS files.
+.gui-shot[![Real Source Control message input containing Add homepage and the Commit button](../images/vscode/commit.png)]
+
+Commit **B** saves the staged snapshot locally.
 ]
 .right[
 ![A new commit B records the staged homepage while working and staged contents remain v2](../images/git-course/commit.svg)
@@ -341,31 +426,46 @@ It also includes the unchanged README and CSS files.
 .clear[]
 
 ???
+The plain Commit action is used, not Commit & Push or Commit & Sync. Stage explicitly before committing: smart commit settings can otherwise offer to stage additional changes. The real GUI commit was checked to create B with the expected message and a clean working tree. Source: https://code.visualstudio.com/docs/sourcecontrol/staging-commits
+
 Continue the actual exercise with v2 in the working tree and index. After this commit, git status should report a clean working tree. A commit is a project snapshot, not only the edited file. Source: https://git-scm.com/docs/git-commit
 
 ---
-class: compact-code
+class: command compact-code
 name: log
 
 # Read the history
 
+.left[
 ```bash
 git log --oneline
 ```
-
 .output[
 ```text
-7ab42f1 Add homepage
-c81e2d9 Add project files
+eb61273 Add homepage
+fac24ee Add project files
 ```
 ]
 
-The newest commit appears first. Your IDs will be different.
+The newest commit appears first.
+Your IDs will be different.
+]
+.right[
+.gui-path[VS Code · **Source Control Graph**]
 
-`git status` should now report “working tree clean”.
+.gui-shot[![Real built-in Graph with Add homepage above Add project files and main at the latest commit](../images/vscode/history.png)]
+
+B is above A. `main` points to B.
+
+Selecting a commit lets you inspect it.
+]
+.clear[]
 
 ???
+
 The output hashes are examples. These are commits B and A. Logs normally show newest first, while our diagrams read oldest to newest from left to right. Press q if Git opens a pager. log and status do not change files or references. Source: https://git-scm.com/docs/git-log
+
+The Graph is built in to this VS Code version; these screenshots do not use GitLens or Git Graph extensions. Inspecting a commit is read-only. Checkout (Detached) is a different action that changes HEAD and working files. Source: https://code.visualstudio.com/docs/sourcecontrol/history
 
 ---
 class: command
@@ -388,6 +488,8 @@ You are still on `main`.
 .clear[]
 
 ???
+VS Code’s Create Branch... command also switches to the new branch. It corresponds to git switch -c, not to this create-only git branch operation. We will use that shortcut on the add-footer slide.
+
 A branch is a movable name for a commit. Creating it does not copy all the files or switch the current branch. HEAD usually points to the branch you are on. Source: https://git-scm.com/docs/git-branch
 
 ---
@@ -404,6 +506,10 @@ git switch add-style
 HEAD now names `add-style`.
 
 The files look the same because both branches point to B.
+
+.gui-path[VS Code · Click the current branch in the **Status Bar**, then choose `add-style`.]
+
+.gui-shot[![Real branch picker with the existing add-style branch selected at commit B](../images/vscode/switch.png)]
 ]
 .right[
 ![HEAD changes from main to add-style, with both branch tips still at B](../images/git-course/switch.svg)
@@ -453,6 +559,8 @@ git switch main
 `style.css` uses `#222` again.
 
 The navy version is still saved in C on `add-style`.
+
+.gui-path[VS Code · Status Bar branch name → **main**.]
 ]
 .right[
 ![HEAD moves to main at B and the working style.css returns from navy to #222; commit C remains on add-style](../images/git-course/switch-main.svg)
@@ -478,6 +586,10 @@ git merge add-style
 This is a **fast-forward**. Git creates no extra commit.
 
 `style.css` now uses navy.
+
+.gui-path[VS Code · On **main**, run **Git: Merge…**, then select `add-style`.]
+
+.gui-shot[![Real merge source picker selecting add-style at C](../images/vscode/merge.png)]
 ]
 .right[
 ![Before main is at B and add-style at C; afterward both branches point to C](../images/git-course/fast-forward.svg)
@@ -485,6 +597,8 @@ This is a **fast-forward**. Git creates no extra commit.
 .clear[]
 
 ???
+The installed built-in command is named Git: Merge.... Select the source branch while already on main. The GUI fast-forward was executed and verified: main became C with no additional commit and style.css became navy. Source: https://code.visualstudio.com/docs/sourcecontrol/branches-worktrees
+
 main has no new commits beyond B, so a fast-forward is possible. This assumes the usual merge.ff setting. git merge --ff-only add-style would require that result explicitly. Source: https://git-scm.com/docs/git-merge#_fast_forward_merge
 
 ---
@@ -497,6 +611,8 @@ name: footer-branch
 ```bash
 git switch -c add-footer
 ```
+
+.gui-path[VS Code · **Git: Create Branch…** → `add-footer`. This also switches branches.]
 
 Append to `index.html`:
 
@@ -562,6 +678,8 @@ git merge add-footer \
 Commit **M** has two parents: E and D.
 
 The project now has the README description and the footer.
+
+.gui-path[VS Code · On **main**, **Git: Merge…** → `add-footer`.]
 ]
 .right[
 ![The diverged histories at E and D join at merge commit M; HEAD and main point to M](../images/git-course/merge.svg)
@@ -569,6 +687,8 @@ The project now has the README description and the footer.
 .clear[]
 
 ???
+The GUI uses Git’s generated merge message unless you edit it; the CLI example sets Merge footer explicitly. The state shown is the same two-parent merge.
+
 This is a true merge, unlike the earlier fast-forward. Verify with git log --oneline --graph --all --decorate. The local add-footer branch still points to D after merging. Source: https://git-scm.com/docs/git-merge#_true_merge
 
 ---
@@ -579,10 +699,10 @@ name: conflict
 
 .left[
 <pre class="conflict-code"><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
-&lt;h1&gt;My homepage&lt;/h1&gt;
-&#61;&#61;&#61;&#61;&#61;&#61;&#61;
 &lt;h1&gt;Our homepage&lt;/h1&gt;
-&gt;&gt;&gt;&gt;&gt;&gt;&gt; add-footer</code></pre>
+&#61;&#61;&#61;&#61;&#61;&#61;&#61;
+&lt;h1&gt;Your homepage&lt;/h1&gt;
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; conflict-incoming</code></pre>
 ]
 .right[
 Git may ask you to resolve a conflict.
@@ -600,6 +720,21 @@ git commit
 
 ???
 This is an alternative conflict example, not the outcome of our preceding merge. Our preceding commits changed different files and merged cleanly. Start a merge with a clean working tree; abort is easiest when there are no unrelated local edits to preserve. Source: https://git-scm.com/docs/git-merge#_how_conflicts_are_presented
+
+---
+class: gui-conflict
+name: conflict-vscode
+
+# Resolve a conflict in VS Code
+
+Open `index.html` under **Merge Changes**. Choose a side, or edit **Result** yourself.
+
+.gui-merge[![Actual Merge Editor excerpts: Incoming has Your homepage, Current has Our homepage, Result keeps Our homepage](../images/vscode/conflict.png)]
+
+**Complete Merge** resolves the file. **Continue** commits the merge.
+
+???
+These are labeled crops from the real built-in Merge Editor: the inputs before choosing Current and the result afterward. The top left input is Incoming; the top right input is Current. Neither side is automatically the correct answer. Review the result and run the project before completing the merge. The current-side result equals the current commit in this separate example, so git status may list no file difference after resolution even though MERGE_HEAD still exists. Complete Merge does not by itself create the merge commit: that was verified against HEAD and MERGE_HEAD. Continue completes the pending merge, corresponding to git commit; resolving/saving and staging correspond to the previous slide’s git add. This is the same alternative conflict example, not a conflict in our clean footer merge. If clicking a conflict opens a text editor, use Open in Merge Editor, or enable git.mergeEditor. Source: https://code.visualstudio.com/docs/sourcecontrol/merge-conflicts
 
 ---
 class: reference
@@ -655,7 +790,11 @@ git push -u origin main
 
 GitHub now has the history through M.
 
-`-u` sets the upstream for later push and pull commands.
+.gui-path[VS Code · With `origin` already added, choose **Publish Branch** for the first push.]
+
+.gui-shot[![Real Publish Branch button used when origin is configured but main has no upstream](../images/vscode/publish.png)]
+
+This also sets the upstream. Later, use **Git: Push**.
 ]
 .right[
 ![Before GitHub is empty; after push its main points to M and local origin/main records M](../images/git-course/push.svg)
@@ -663,6 +802,8 @@ GitHub now has the history through M.
 .clear[]
 
 ???
+With origin already configured and no upstream on main, the real Publish Branch action was checked against a local bare remote: it pushed main and set origin/main as upstream. Publish to GitHub is a separate action that can create a new GitHub repository; do not choose it here. Sync Changes pulls then pushes, so it is not a synonym for Push. Authentication and repository permissions still apply when origin is GitHub. Source: https://code.visualstudio.com/docs/sourcecontrol/repos-remotes
+
 Only main is pushed as a named branch. The commits reachable from it include the merged feature work, but the local feature branch names are not automatically created remotely. origin/main is a local remote-tracking reference. Source: https://git-scm.com/docs/git-push
 
 ---
@@ -680,6 +821,8 @@ cd my-first-project
 ```
 
 You get working files, Git history, and an `origin` remote.
+
+.gui-path[VS Code · **Git: Clone** → paste the repository URL → choose a destination folder → open the clone.]
 ]
 .right[
 ![A new my-first-project folder on another computer contains the three files and .git, with main and origin/main at M](../images/git-course/clone.svg)
@@ -705,6 +848,8 @@ git fetch origin
 `origin/main` advances to N.
 
 Your `main` and working files stay at M.
+
+.gui-path[VS Code · Command Palette → **Git: Fetch**.]
 ]
 .right[
 ![Before fetch remote main is N but local main and origin/main are M; afterward origin/main is N while main remains M](../images/git-course/fetch.svg)
@@ -712,6 +857,8 @@ Your `main` and working files stay at M.
 .clear[]
 
 ???
+The exact Git: Fetch action was selected rather than Fetch From All Remotes. The teaching repository has one origin. After the GUI fetch, origin/main moved to N while local main, HEAD and the working README remained at M. Source: https://code.visualstudio.com/docs/sourcecontrol/repos-remotes
+
 For a live demo, make a README change in the second clone and push it, or edit the README on GitHub if repository rules allow it. Return to the original clone before fetching. Here N adds an About paragraph to README.md. Source: https://git-scm.com/docs/git-fetch
 
 ---
@@ -728,6 +875,8 @@ git pull --ff-only
 Pull fetches, then integrates into your current branch.
 
 Here, `main` advances to N and the working README updates.
+
+.gui-path[VS Code · **Git: Pull** uses your Git pull settings. For the same fast-forward-only rule, set `git config pull.ff only` in this repository first.]
 ]
 .right[
 ![After fetch local main is M and origin/main is N; pull fast-forwards main to N and updates its working files](../images/git-course/pull.svg)
@@ -735,6 +884,8 @@ Here, `main` advances to N and the working README updates.
 .clear[]
 
 ???
+The GUI Pull was executed after configuring pull.ff=only locally in the dedicated demo repository. It advanced HEAD/main to N and updated the README. Without that setting, Pull can merge or rebase according to the configuration. Sync Changes also pushes afterward and is not used for this step. Source: https://code.visualstudio.com/docs/sourcecontrol/repos-remotes
+
 The current branch is main, it tracks origin/main, and the working tree is clean. The preceding fetch already obtained N, so this pull's fetch has nothing new to download before integration. --ff-only stops when histories diverge. Other pull options or settings can integrate by merge or rebase. Source: https://git-scm.com/docs/git-pull
 
 ---
@@ -749,7 +900,8 @@ name: remote-summary
 | `git fetch` | Downloads history and updates remote-tracking references. |
 | `git pull` | Fetches, then integrates into the current branch. |
 
-A commit saves locally. A push shares it.
+In VS Code, **Sync Changes pulls, then pushes**.
+Choose **Fetch**, **Pull**, or **Push** when you want one operation.
 
 ???
 Angle brackets mark placeholders. Fetch does not integrate into the current branch or update working files. Push and pull do not make every branch on two computers identical. Sources: https://git-scm.com/docs/git-clone, https://git-scm.com/docs/git-push, https://git-scm.com/docs/git-fetch and https://git-scm.com/docs/git-pull
@@ -778,6 +930,8 @@ name: pr-start
 ```bash
 git switch -c improve-readme
 ```
+
+.gui-path[VS Code · **Git: Create Branch…** → `improve-readme`.]
 
 In `README.md`, add a Run section that says how to open `index.html`.
 
@@ -810,6 +964,8 @@ git push -u origin \
 GitHub now has `improve-readme` at P.
 
 Its `main` is still at N.
+
+.gui-path[VS Code · **Publish Branch** on `improve-readme`. This shares the branch; it does not open a pull request.]
 ]
 .right[
 ![Before push P exists only locally; afterward the remote improve-readme also points at P and remote main stays at N](../images/git-course/pr-push.svg)
@@ -878,6 +1034,8 @@ git pull --ff-only
 `main` and `origin/main` now point to Q.
 
 Your local feature branch stays at P.
+
+.gui-path[VS Code · Switch to **main**, then **Git: Pull** with the same pull settings.]
 ]
 .right[
 ![After switching to main at N, pull advances main to Q, matching GitHub; P remains in the merged history](../images/git-course/sync.svg)

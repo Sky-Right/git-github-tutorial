@@ -45,6 +45,18 @@ pre { margin:20px 0; }
 .command .left { padding-top:2px; }
 .command .right { padding-top:4px; }
 .command .right img { display:block; width:100%; max-height:465px; object-fit:contain; }
+.gui-path { display:block; font-size:21px; line-height:1.4; margin:14px 0; }
+.gui-path code { font-size:1em; }
+.gui-shot { display:block; margin:16px 0; }
+.gui-shot img { display:block; width:100%; height:auto; object-fit:contain; }
+.command .right .gui-shot img { max-height:220px; }
+.left > p:has(>.gui-shot),.right > p:has(>.gui-shot) { margin:0; }
+.gui-read .note { margin-top:32px; }
+.gui-merge { display:block; margin:22px 0; }
+.gui-merge img { display:block; width:100%; height:auto; }
+.gui-conflict > p:has(>.gui-merge) { margin:0; }
+.gui-conflict h1 { margin-bottom:22px; }
+.gui-conflict p { margin:15px 0; }
 .right > p:has(>img) { margin:0; }
 .figure { display:block; margin:28px 0; }
 .figure img { display:block; margin:auto; width:100%; max-height:370px; object-fit:contain; }

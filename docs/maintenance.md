@@ -25,6 +25,35 @@ The staging quiz, conflict example, and undo commands are explicitly separate de
 
 The command check in `engine/verify_git_examples.py` reads the actual Bash blocks from the Markdown. Editor changes are applied between those commands, then assertions compare the resulting Git state with the lesson. It uses a local bare repository in place of GitHub, including a forced merge commit to reproduce the specified GitHub PR merge method.
 
+## VS Code alongside the commands
+
+The third refinement keeps the cover, closing slide, fonts, Logo, and existing
+state diagrams. Eleven real screenshot excerpts show the corresponding built-in
+controls. Most fit inside the command column; three additional teaching slides
+cover the real diff, an unstage-and-restage detour, and the Merge Editor. The
+course now has 45 teaching slides and 46 playback states.
+
+The unstage detour starts after staging v2 and returns to staged v2 before B.
+Its diagram shows the unstage operation; the final add restores the earlier state.
+The conflict example stays explicitly separate from the main footer merge.
+
+Source Control lists are observations, not state-changing commands. Create
+Branch also switches and belongs with `switch -c`, not the create-only `branch`.
+The merge picker merges the selected source into the current branch. Publish
+Branch is shown only after origin has been configured, and differs from Publish
+to GitHub. Push is separate from Sync (pull then push). GUI Pull uses Git's pull
+configuration; use local `pull.ff=only` to match the course's CLI policy.
+Complete Merge resolves the file; Continue commits the pending merge.
+
+See `images/vscode/README.md` and `captures.json` for capture provenance and state
+checks. The real local interface is VS Code 1.137.0, Dark Modern, Chinese UI;
+English labels are added as slide text rather than painted over native labels.
+All capture actions use an empty temporary profile and a dedicated, ignored
+`.vscode-demo/` repository with local bare remotes. Do not publish this directory,
+temporary profiles, or uncropped desktop captures. The crop helper uses Pillow,
+already supplied by the project's python-pptx dependency; it is not part of the
+normal build and adds no dependency.
+
 ## Build and publication
 
 `build-git.sh` regenerates SVG diagrams and calls the existing Python builder with `--html-only --standalone`. It writes:
@@ -39,6 +68,6 @@ The local workspace also contains older decks, backup archives, a Python environ
 
 ## Verification
 
-The local browser check renders all 43 playback states, checks each slide and each SVG label, verifies the Logo and fonts, exercises keyboard navigation and the answer reveal, and tests three desktop viewport sizes. The print output contains 42 pages. Local Git checks cover 13 groups of states and the builder has 5 regression tests.
+The local browser check renders all 46 playback states, checks each slide and each SVG label, verifies the Logo and fonts, exercises keyboard navigation and the answer reveal, and tests three desktop viewport sizes. The print output contains 45 pages. Local Git checks cover 14 groups of states and the builder has 5 regression tests.
 
 The new public Pages URL is checked in a browser after deployment. No real learner repository or pull request is created by the command tests. The old PPTX renderer remains available locally, but this course's layout and diagrams are delivered as HTML and browser print output.
