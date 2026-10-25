@@ -10,7 +10,6 @@ class StandaloneTest(unittest.TestCase):
     def test_bundles_relative_assets_and_escapes_script_end(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            (root / 'dist').mkdir()
             (root / 'content').mkdir()
             (root / 'style.css').write_text('body { background: url("icon.svg"); }')
             (root / 'script.js').write_text('const tag = "</script>";')

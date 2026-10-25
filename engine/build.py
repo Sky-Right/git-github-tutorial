@@ -222,7 +222,7 @@ def make_standalone_html(markdown: str, title: str, template: str,
     def local_path(value: str, base: Path) -> Path:
         if re.match(r"[a-zA-Z][a-zA-Z0-9+.-]*:", value) or value.startswith("//"):
             raise ValueError(f"Standalone assets must be local: {value}")
-        return (base / value).resolve(strict=True)
+        return (base / value).resolve()
 
     def data_uri(value: str, base: Path) -> str:
         if value.startswith("data:"):
